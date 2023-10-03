@@ -21,21 +21,21 @@ $aryStr = str_split($s);
 $omote = "b";
 $ura = "w";
 
-function turn(&$aryStr, $first_c, $last_c, $aryStrtart, $last)
+function turn(&$aryStr, $firstC, $lastC, $start, $last)
 {
-    if ($aryStrtart > $last) {
+    if ($start > $last) {
         return;
     }
-    for ($coin = $aryStrtart; $coin <= $last; $coin++) {
-        if ($aryStr[$coin] == $first_c) {
-            $aryStr[$coin] = $last_c;
+    for ($coin = $start; $coin <= $last; $coin++) {
+        if ($aryStr[$coin] == $firstC) {
+            $aryStr[$coin] = $lastC;
         } else {
-            $aryStr[$coin] = $first_c;
+            $aryStr[$coin] = $firstC;
         }
     }
-    $aryStrtart = array_search($last_c, $aryStr);
-    $last = array_search($first_c, array_reverse($aryStr));
-    turn($aryStr, $first_c, $last_c, $aryStrtart, $last);
+    $start = array_search($lastC, $aryStr);
+    $last = array_search($firstC, array_reverse($aryStr));
+    turn($aryStr, $firstC, $lastC, $start, $last);
 }
 
 if ($aryStr[0] == $ura && $aryStr[$n - 1] == $ura) {
@@ -44,16 +44,16 @@ if ($aryStr[0] == $ura && $aryStr[$n - 1] == $ura) {
     echo $n . "\n";
 } else {
     if ($aryStr[0] == $ura) {
-        $aryStrtart = array_search($omote, $aryStr);
+        $start = array_search($omote, $aryStr);
         $last = array_search($ura, array_reverse($aryStr));
-        turn($aryStr, $ura, $omote, $aryStrtart, $last);
+        turn($aryStr, $ura, $omote, $start, $last);
         echo count(array_filter($aryStr, function ($c) use ($omote) {
             return $c == $omote;
         })) . "\n";
     } else {
-        $aryStrtart = array_search($ura, $aryStr);
+        $start = array_search($ura, $aryStr);
         $last = array_search($omote, array_reverse($aryStr));
-        turn($aryStr, $omote, $ura, $aryStrtart, $last);
+        turn($aryStr, $omote, $ura, $start, $last);
         echo count(array_filter($aryStr, function ($c) use ($omote) {
             return $c == $omote;
         })) . "\n";
